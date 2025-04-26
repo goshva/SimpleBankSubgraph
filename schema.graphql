@@ -1,0 +1,26 @@
+type Deposit @entity {
+  id: ID!
+  depositor: Bytes! # address
+  amount: BigInt!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+
+type Withdrawal @entity {
+  id: ID!
+  withdrawer: Bytes! # address
+  amount: BigInt!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+
+type Account @entity {
+  id: ID! # address
+  totalDeposited: BigInt!
+  totalWithdrawn: BigInt!
+  balance: BigInt!
+  deposits: [Deposit!]! @derivedFrom(field: "depositor")
+  withdrawals: [Withdrawal!]! @derivedFrom(field: "withdrawer")
+}

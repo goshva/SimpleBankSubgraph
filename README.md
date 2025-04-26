@@ -4,6 +4,51 @@
 
 This solution implements a subgraph for the SimpleBank contract that tracks deposit and withdrawal events. The implementation includes schema definition, mapping logic, subgraph configuration, and sample GraphQL queries.
 
+### Prerequisites
+- Install [Graph CLI](https://github.com/graphprotocol/graph-cli):
+  ```bash
+  npm install -g @graphprotocol/graph-cli
+  ```
+
+### Commands
+1. Generate types:
+   ```bash
+   graph codegen
+   ```
+
+2. Build subgraph:
+   ```bash
+   graph build
+   ```
+
+3. Deploy to Hosted Service:
+   ```bash
+   graph deploy --product hosted-service yourusername/simplebank-subgraph
+   ```
+
+## Example Queries
+
+```graphql
+# Get all accounts with their balances
+{
+  accounts {
+    id
+    balance
+    totalDeposited
+    totalWithdrawn
+  }
+}
+
+# Get latest 10 deposits
+{
+  deposits(first: 10, orderBy: timestamp, orderDirection: desc) {
+    depositor
+    amount
+    timestamp
+  }
+}
+```
+
 ## 1. Schema Definition (`schema.graphql`)
 
 ```graphql

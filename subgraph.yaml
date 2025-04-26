@@ -1,0 +1,30 @@
+specVersion: 0.0.5
+description: "Tracks SimpleBank deposits and withdrawals"
+repository: https://github.com/yourusername/simplebank-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: SimpleBank
+    network: mainnet
+    source:
+      address: "0x1234...abcd" # Replace with actual contract address
+      abi: SimpleBank
+      startBlock: 1234567 # Block when contract was deployed
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Deposit
+        - Withdrawal
+        - Account
+      abis:
+        - name: SimpleBank
+          file: ./abis/SimpleBank.json
+      eventHandlers:
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: Withdrawal(indexed address,uint256)
+          handler: handleWithdrawal
+      file: ./src/mapping.ts
